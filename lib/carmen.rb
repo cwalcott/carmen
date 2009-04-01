@@ -16,6 +16,12 @@ module Carmen
   STATES = Dir[data_path + '/states/*'].map do |file_name|
     [File::basename(file_name, '.yml').upcase, YAML.load_file(file_name)]
   end
+  
+  # Returns an array structure of country names and codes with the supplied country moved to the beginning
+  #   Carmen::countries('US') => [["United States", "US"], ["Afghanistan", "AF"], ["Aland Islands", "AX"], ... ]
+  def self.countries(first='US')
+    [[country_name(first), first]] + (COUNTRIES - [country_name(first), first])
+  end
 
   # Returns the country name corresponding to the supplied country code
   #  Carmen::country_name('TV') => 'Tuvalu'
